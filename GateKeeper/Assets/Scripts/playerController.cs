@@ -52,7 +52,7 @@ public class playerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other){
 		if (other.gameObject.tag == "Platform") {
-			jumpCount = 100;
+			jumpCount = 3;
 			print ("walljump");
 		}
 	}
