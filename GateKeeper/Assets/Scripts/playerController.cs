@@ -34,7 +34,7 @@ public class playerController : MonoBehaviour {
 
 	void Update () {
 
-		if (Input.GetButtonDown ("Jump") && jumpCount > 0) {
+		if (Input.GetKeyDown (KeyCode.JoystickButton0) && jumpCount > 0) {
 			print (jumpCount);
 			rb.velocity = new Vector2 (rb.velocity.x, 0);
 			rb.AddForce (new Vector2 (0, jumpHeight));
