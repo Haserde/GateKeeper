@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/heaven2.unity
+- path: Assets/hell.unity
   isLoaded: 1
   isActive: 1
