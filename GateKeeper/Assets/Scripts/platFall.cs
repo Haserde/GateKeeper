@@ -19,6 +19,14 @@ public class platFall : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.gameObject.tag == "Player") {
+			StartCoroutine(fall());
+			Physics2D.IgnoreLayerCollision (8, 10, true);
+			print ("pass");
+		}
+	}
+
 	IEnumerator fall(){
 		yield return new WaitForSeconds (fallDelay);
 		rb.isKinematic = false;

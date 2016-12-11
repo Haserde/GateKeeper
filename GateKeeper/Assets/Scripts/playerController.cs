@@ -9,6 +9,7 @@ public class playerController : MonoBehaviour {
 	public bool doubleJump = false; 
 	public bool grounded;
 	public AudioClip jump;
+	public GameObject ow;
 
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
@@ -40,20 +41,29 @@ public class playerController : MonoBehaviour {
 			jumpCount--;
 			audio.PlayOneShot (jump);
 		}
-		if (Input.GetKeyDown (KeyCode.M)) {
-			//print ("dash");
-			//rb.AddForce (new Vector2 (dashSpeed, 0));
-			//rb.velocity = new Vector2(rb.velocity.x * dashSpeed, 0);
-			rb.velocity =  new Vector2(rb.velocity.x*3f, rb.velocity.y);
-			//print (rb.velocity);
-			//anim.SetBool ("Dash", true);
-		} 
 	}
 
 	void OnCollisionEnter2D(Collision2D other){
 		if (other.gameObject.tag == "Platform") {
-			jumpCount = 3;
+			jumpCount = 2;
 			print ("walljump");
+		}
+		if (other.gameObject.tag == "Apple") {
+			ow.SetActive (true);
+		} else {
+			ow.SetActive (false);
+		}
+	}
+
+	void OnTriggerStay2D(Collider2D other){
+		if (other.gameObject.tag == "MovingPlat") {
+			transform.parent = other.transform;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other){
+		if (other.gameObject.tag == "MovingPlat") {
+			transform.parent = null;
 		}
 	}
 
@@ -62,7 +72,6 @@ public class playerController : MonoBehaviour {
 
 		xSpeed = Input.GetAxisRaw ("Horizontal") * moveSpeed;
 		rb.velocity = new Vector2 (xSpeed, rb.velocity.y);
-		//print (rb.velocity);
 
 		sr.flipX = xSpeed  < 0;
 
@@ -74,7 +83,7 @@ public class playerController : MonoBehaviour {
 
 		grounded = Physics2D.OverlapCircle (groundCheck.position, 0.3f, whatIsGround);
 
-		print (grounded);
+		//print (grounded);
 
 		if (grounded) {
 			anim.SetBool ("Jump", false);
